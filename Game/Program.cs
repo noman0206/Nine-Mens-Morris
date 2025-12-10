@@ -21,7 +21,7 @@ class Game
         public string name {get; private set;} // Name des Spielers
         public Color color {get; private set;}// Farbe des Spielers 
         public static List<Player> players {get; private set;} = new();
-        private static Player currentPlayer {get; set;}
+        private static Player? currentPlayer {get; set;}
         public Player(Game_Board game_board) // Konstruktor
         {
             this.game_board =game_board;
@@ -29,7 +29,9 @@ class Game
             Program.print_Title(); // Titel ausgeben
 
             Console.Write("\n\tGib deinen Namen ein.\n\t> ");
-            name = Console.ReadLine(); // Lese Namen ein
+            string? input = Console.ReadLine(); // Lese Eingabe ein
+            if(input != null) name = input; // Lese Namen ein
+            else name = "unbekannter Spieler";
             
             Menu playercolor_Menu = new Menu("Wähle eine Farbe aus:",Color.colors.Select(color => color.name).ToList()); // Starte Menu mit der nach namen unformatierten Liste der verfügbaren Farben
             this.color = Color.colors[playercolor_Menu.start()]; // setze Spielerfarbe aus Menu ausgabe
@@ -63,19 +65,19 @@ class Game
                 game_board.print(index,index_choosen_slot); // gebe Spielbrett mit auswahl aus
 
                 CKI = Console.ReadKey(false); // Keyboard abfrage
-                if(CKI.Key == ConsoleKey.UpArrow && Game_Board.Slot.slots[index-1].possible_Moves[0] != null) // Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
+                if(CKI.Key == ConsoleKey.UpArrow && Game_Board.Slot.slots[index-1].possible_Moves[0] != Game_Board.Slot.null_Slot) // Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
                 {
                     index = Game_Board.Slot.slots[index-1].possible_Moves[0].number;
                 }
-                else if(CKI.Key == ConsoleKey.RightArrow && Game_Board.Slot.slots[index-1].possible_Moves[1] != null) // Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
+                else if(CKI.Key == ConsoleKey.RightArrow && Game_Board.Slot.slots[index-1].possible_Moves[1] != Game_Board.Slot.null_Slot) // Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
                 {
                     index = Game_Board.Slot.slots[index-1].possible_Moves[1].number;
                 }
-                else if(CKI.Key == ConsoleKey.DownArrow && Game_Board.Slot.slots[index-1].possible_Moves[2] != null) // Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
+                else if(CKI.Key == ConsoleKey.DownArrow && Game_Board.Slot.slots[index-1].possible_Moves[2] != Game_Board.Slot.null_Slot) // Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
                 {
                     index = Game_Board.Slot.slots[index-1].possible_Moves[2].number;
                 }
-                else if(CKI.Key == ConsoleKey.LeftArrow && Game_Board.Slot.slots[index-1].possible_Moves[3] != null) // Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
+                else if(CKI.Key == ConsoleKey.LeftArrow && Game_Board.Slot.slots[index-1].possible_Moves[3] != Game_Board.Slot.null_Slot) // Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
                 {
                     index = Game_Board.Slot.slots[index-1].possible_Moves[3].number;
                 }
@@ -137,7 +139,7 @@ class Game
         }
         public void remove_pin_form_other_player() // Nehme Spielstein eines anderen
         {
-            Player other_player = null; // Anderer Spiler
+            Player? other_player = null; // Anderer Spiler
             bool anyfreePin = false;
             foreach(Player player in players) // Für jeden Spiler in Spieler liste
             {
@@ -179,9 +181,10 @@ class Game
         public class Slot
         {
             public static List<Slot> slots {get; private set;} = new(); // Liste aller slots
-            public Player player {get; set;} // Spieler der einen stein auf dem slot hat | standart: Null
+            public Player? player {get; set;} // Spieler der einen stein auf dem slot hat | standart: Null
             public int number {get; private set;} // Nummer des Felds | startet bei 1
             public List<Slot> possible_Moves {get; private set;} = new(); // liste der möglichen Züge von diesem Punkt aus | Liste aus 4 elementen 0: nach oben 1: nach rechts 2 : nach unten 3: nach links | wenn element 0 ist dann ist der zug nicht möglich
+            public static Slot null_Slot {get; private set;} = new Slot(0); // Statischer null slot für nicht mögliche züge
             public Slot(int number) // Konstruktor
             {
                 this.player = null; // Feld hat keine Spieler bei Erstellung des Slots
@@ -210,7 +213,7 @@ class Game
                 foreach(int number in numbers) // Für Jede Slotnummer in Liste
                 {
                     if(number !=0) this.possible_Moves.Add(slots[number-1]); // Füge diesen slot hinzu
-                    else this.possible_Moves.Add(null); // wenn nummer 0 ist füge null für eine nciht mögliche Option hinzu
+                    else possible_Moves.Add(null_Slot); // wenn nummer 0 ist füge null für eine nciht mögliche Option hinzu
                 }
             }
             public static void initialize_slots() // Inizialisiere Slots mit möglichen Spielzügen
@@ -219,6 +222,7 @@ class Game
                 {
                     slots.Add(new Slot(i+1)); // 24 Slots erstellen und nummerieren
                 }
+                
                 // Slot Verzeichniss
                 slots[0].set_possible_Moves([0,2,8,0]); // Slot Nummer: 1 Mögliche Spielzüge = 2,8
                 slots[1].set_possible_Moves([0,3,10,1]); // Slot Nummer: 2 Mögliche Spielzüge = 1,3,10
@@ -403,9 +407,8 @@ class Game
 
         this.game_board = new Game_Board(); // Erstelle Gameboard
 
-        this.player1 = new Player("Spieler 1", playercolor_blue,game_board); // Erstelle Spieler 1 
-        this.player2 = new Player("Spieler 2", playercolor_red,game_board); // Erstelle Spieler 2
-
+        this.player1 = new Player(game_board); // Erstelle Spieler 1 
+        this.player2 = new Player(game_board); // Erstelle Spieler 2
     }
     public void start() // Starte das Spiel
     {
@@ -438,7 +441,7 @@ class Game
             }
         }while(player1.get_slot_count() >= 3 && player2.get_slot_count() >= 3); // Widerhole solange beider Spieler min 3 Spielsteine haben
 
-        Player Winner = null;
+        Player? Winner = null;
         if(player1.get_slot_count() > player2.get_slot_count()) Winner = player1;
         else if(player1.get_slot_count() < player2.get_slot_count()) Winner = player2;
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj": {}
+    "c:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj": {}
   },
   "projects": {
-    "C:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj": {
+    "c:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj",
+        "projectUniqueName": "c:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj",
         "projectName": "Game",
-        "projectPath": "C:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj",
+        "projectPath": "c:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj",
         "packagesPath": "C:\\Users\\hanne\\.nuget\\packages\\",
-        "outputPath": "C:\\Onedrive\\Code\\NineMan'sMorris\\Game\\obj\\",
+        "outputPath": "c:\\Onedrive\\Code\\NineMan'sMorris\\Game\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "P:\\VisualStudio\\Tools\\NuGetPackages"

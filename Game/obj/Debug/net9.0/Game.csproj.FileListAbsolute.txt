@@ -1,0 +1,15 @@
+c:\Onedrive\Code\NineMan'sMorris\Game\bin\Debug\net9.0\Game.exe
+c:\Onedrive\Code\NineMan'sMorris\Game\bin\Debug\net9.0\Game.deps.json
+c:\Onedrive\Code\NineMan'sMorris\Game\bin\Debug\net9.0\Game.runtimeconfig.json
+c:\Onedrive\Code\NineMan'sMorris\Game\bin\Debug\net9.0\Game.dll
+c:\Onedrive\Code\NineMan'sMorris\Game\bin\Debug\net9.0\Game.pdb
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\Game.GeneratedMSBuildEditorConfig.editorconfig
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\Game.AssemblyInfoInputs.cache
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\Game.AssemblyInfo.cs
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\Game.csproj.CoreCompileInputs.cache
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\Game.sourcelink.json
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\Game.dll
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\refint\Game.dll
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\Game.pdb
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\Game.genruntimeconfig.cache
+c:\Onedrive\Code\NineMan'sMorris\Game\obj\Debug\net9.0\ref\Game.dll
