@@ -396,21 +396,17 @@ class Game
         }
     }
     private Game_Board game_board {get;set;}
-    private Player player1 {get;set;}
-    private Player player2 {get;set;}
     public Game()
     {
-        Player.Color playercolor_red = new Player.Color("Rot", ConsoleColor.Red);
-        Player.Color playercolor_blue = new Player.Color("Blau", ConsoleColor.Blue);
-        Player.Color playercolor_green = new Player.Color("Grün", ConsoleColor.Green);
-        Player.Color playercolor_yellow = new Player.Color("Gelb", ConsoleColor.Yellow);
+        Player.Color playercolor_red = new Player.Color("Rot", ConsoleColor.Red); // Erstelle Spielerfarben
+        Player.Color playercolor_blue = new Player.Color("Blau", ConsoleColor.Blue); // Erstelle Spielerfarben
+        Player.Color playercolor_green = new Player.Color("Grün", ConsoleColor.Green); // Erstelle Spielerfarben
+        Player.Color playercolor_yellow = new Player.Color("Gelb", ConsoleColor.Yellow); // Erstelle Spielerfarben
 
-        this.game_board = new Game_Board(); // Erstelle Gameboard
+        game_board = new Game_Board(); // Erstelle Gameboard
 
-        for(int i = 0; i < 2; i++) // Erstelle 2 Spieler
-        {
-            new Player(game_board,i+1); // Erstelle Spieler
-        }
+        new Player(game_board,1); // Erstelle Spieler 1
+        new Player(game_board,2); // Erstelle Spieler 2
     }
     public void start() // Starte das Spiel
     {
@@ -441,11 +437,11 @@ class Game
                     found_Muehles--; // dekrementiere die anzahl der gefundenen Mühlen
                 }
             }
-        }while(player1.get_slot_count() >= 3 && player2.get_slot_count() >= 3); // Widerhole solange beider Spieler min 3 Spielsteine haben
+        }while(Player.players[0].get_slot_count() >= 3 && Player.players[1].get_slot_count() >= 3); // Widerhole solange beider Spieler min 3 Spielsteine haben
 
         Player? Winner = null;
-        if(player1.get_slot_count() > player2.get_slot_count()) Winner = player1;
-        else if(player1.get_slot_count() < player2.get_slot_count()) Winner = player2;
+        if(Player.players[0].get_slot_count() > Player.players[1].get_slot_count()) Winner = Player.players[0];
+        else if(Player.players[0].get_slot_count() < Player.players[1].get_slot_count()) Winner = Player.players[1];
 
         Program.print_Title();
         if(Winner != null)Console.WriteLine("\n\n\t"+Winner.name+" hat gewonnen! \n\n\tDrücke eine Taste um das Spiel zu beenden");
