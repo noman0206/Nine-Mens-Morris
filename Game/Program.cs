@@ -1,4 +1,4 @@
-﻿// Mühle Mini Game Regeln siehe: https://www.spielezar.ch/portal/blog/wissen/muehle-spielregeln
+﻿// Mühle Mini Game Regeln siehe: https://www.spielezar.ch/portal/blog/wissen/mill-spielregeln
 using System.Data;
 using System.Text;
 class Game
@@ -145,7 +145,7 @@ class Game
             }
             foreach(Game_Board.Slot slot in Game_Board.Slot.slots)
             {
-                if(slot.player == other_player && Game_Board.Muehle.check_Slot_for_Meuhle(slot.number) == false) anyfreePin = true;
+                if(slot.player == other_player && Game_Board.Mill.check_Slot_for_Meuhle(slot.number) == false) anyfreePin = true;
             }
             if(anyfreePin == false)
             {
@@ -159,7 +159,7 @@ class Game
                 do // Spieler wählt den Slot des Gegners aus den er löschen will
                 {
                     index = choose_slot(index,0,errortext); // Slotauswahl des spielers
-                }while(!(Game_Board.Slot.slots[index-1].player == other_player && Game_Board.Muehle.check_Slot_for_Meuhle(index) == false)); // Wiederhole solange der ausgewählte pin nicht ein Pin ist, ein Pin des Gegners ist und der pin nicht in eine mühle ist
+                }while(!(Game_Board.Slot.slots[index-1].player == other_player && Game_Board.Mill.check_Slot_for_Meuhle(index) == false)); // Wiederhole solange der ausgewählte pin nicht ein Pin ist, ein Pin des Gegners ist und der pin nicht in eine mühle ist
                 Game_Board.Slot.slots[index-1].player = null; // Setzte pin auf null
             }
             
@@ -284,25 +284,25 @@ class Game
                 new Combination([Slot.slots[7],Slot.slots[15],Slot.slots[23]]);
             }
         }
-        public class Muehle
+        public class Mill
         {
-            public static List<Muehle> existing_Muehlen {get; private set;} = new(); // Liste aller Mühlem auf dem Spielfeld
+            public static List<Mill> existing_Mills {get; private set;} = new(); // Liste aller Mühlem auf dem Spielfeld
             public Combination combination {get; private set;} // Kombination der Mühle
-            public Muehle(Combination combination) // Konstruktor
+            public Mill(Combination combination) // Konstruktor
             {
                 this.combination = combination;
-                existing_Muehlen.Add(this); // Füge Mühle zur Liste der existiedenden Mühlen hinzu
+                existing_Mills.Add(this); // Füge Mühle zur Liste der existiedenden Mühlen hinzu
             }
             public static int check() // Überprüfe ob alte mühlen weiter bestehen un suche nach neuen Mühlen || Wenn Mühle gefundenwurde gebe  
             {
-                List<Muehle> delList = new(); // Liste der zu löschenden Listen
-                foreach(Muehle muehle in existing_Muehlen) // für jede Mühle die existiert
+                List<Mill> delList = new(); // Liste der zu löschenden Listen
+                foreach(Mill mill in existing_Mills) // für jede Mühle die existiert
                 {
-                    if(muehle.combination.check() == false) delList.Add(muehle); // wenn combination der mühle nicht mehr erüllt ist, füge diese zur Löschungsliste hinzu
+                    if(mill.combination.check() == false) delList.Add(mill); // wenn combination der mühle nicht mehr erüllt ist, füge diese zur Löschungsliste hinzu
                 }
-                foreach(Muehle muehle in delList) // für jede Mühle in der Löschungsliste
+                foreach(Mill mill in delList) // für jede Mühle in der Löschungsliste
                 {
-                    existing_Muehlen.Remove(muehle); // lösche Mühle
+                    existing_Mills.Remove(mill); // lösche Mühle
                 }
 
                 int status = 0; // anzahl der neu gefundenen Mühlen
@@ -311,13 +311,13 @@ class Game
                     if(combination.check() == true) // Falls Kombination noch eine Mühle ist
                     {
                         List<Combination> all_combinations_used = new(); // Liste aller benutzten Muhlen
-                        foreach(Muehle muehle in existing_Muehlen) // Füge jede Mühle der benutzten Mühlen hinzu
+                        foreach(Mill mill in existing_Mills) // Füge jede Mühle der benutzten Mühlen hinzu
                         {
-                            all_combinations_used.Add(muehle.combination); // Füge Mühle zu bereits existierenden Mühlen hinzu 
+                            all_combinations_used.Add(mill.combination); // Füge Mühle zu bereits existierenden Mühlen hinzu 
                         }
                         if(all_combinations_used.Contains(combination) == false) // überprüfe ob eine neue Mühle unter den bereits existierenden Mühlen ist
                         {
-                            new Muehle(combination); // füge neue Mühle hinzu
+                            new Mill(combination); // füge neue Mühle hinzu
                             status++; // inkrementiere Anzahl der gefundenen Mühlen
                         }
                     }
@@ -327,9 +327,9 @@ class Game
             public static bool check_Slot_for_Meuhle(int index) // überprüfe ob Pin in einer Mühle ist
             {
                 bool status = false;
-                foreach(Muehle muehle in existing_Muehlen) // Für jede Mühle in den existierenden Mühlen
+                foreach(Mill mill in existing_Mills) // Für jede Mühle in den existierenden Mühlen
                 {
-                    if (muehle.combination.slots.Contains(Slot.slots[index-1]) == true) // falls index in eriner bestehenden mühle ist
+                    if (mill.combination.slots.Contains(Slot.slots[index-1]) == true) // falls index in eriner bestehenden mühle ist
                     {
                         status = true; // gebe true zurück
                     }
@@ -414,7 +414,7 @@ class Game
             foreach(Player player in Player.players) // Jeder Spieler
             {
                 player.assign_new_Pin(); // lasse Spieler einen Stein seten
-                int found_Muehles = Game_Board.Muehle.check(); // überprüfe ob er eine neue Mühle gemacht hat bzw ob allte Mühlen noch da sind
+                int found_Muehles = Game_Board.Mill.check(); // überprüfe ob er eine neue Mühle gemacht hat bzw ob allte Mühlen noch da sind
                 while(found_Muehles >= 1) // Für jeder Mühle die er gemacht hat
                 {
                     player.remove_pin_form_other_player(); // Entferne ein Spielstein des Gegners
@@ -429,7 +429,7 @@ class Game
                 if(player.get_slot_count() == 3)player.play(true); // wenn Spieler über 3 Spielsteine hat spielt er normal (ohne hüpfen)
                 else player.play(false); // Wenn Spieler 3 Spielsteine hat darf er hüpfen
 
-                int found_Muehles = Game_Board.Muehle.check(); // überprüfe ob er eine neue Mühle gemacht hat bzw ob allte Mühlen noch da sind
+                int found_Muehles = Game_Board.Mill.check(); // überprüfe ob er eine neue Mühle gemacht hat bzw ob allte Mühlen noch da sind
                 while(found_Muehles >= 1) // Für jeder Mühle die er gemacht hat
                 {
                     player.remove_pin_form_other_player(); // Entferne ein Spielstein des Gegners
