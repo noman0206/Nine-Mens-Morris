@@ -50,8 +50,8 @@ class Game
         {
             foreach(Player player in players) // Für jeden Spieler in der Liste
             {
-                if(currentPlayer == player){Console.Write("\t-> ");Program.print_colored(Game_Board.gamesymbol,player.color.consolecolor,ConsoleColor.Black);Console.Write(" "+player.name);Console.WriteLine(" ("+player.get_slot_count()+")");} // Gebe Spieler 1 mit Farbe aus und markiere ihn das er dran ist mit ->
-                else {Console.Write("\t   ");Program.print_colored(Game_Board.gamesymbol,player.color.consolecolor,ConsoleColor.Black);Console.Write(" "+player.name);Console.WriteLine(" ("+player.get_slot_count()+")");} // Gebe Spieler 1 mit Farbe aus
+                if(currentPlayer == player){Console.Write("\t-> ");Program.print_colored(Game_Board.gamesymbol,player.color.consolecolor,ConsoleColor.Black);Console.Write(" "+player.name);Console.WriteLine("\t ("+player.get_slot_count()+")");} // Gebe Spieler 1 mit Farbe aus und markiere ihn das er dran ist mit ->
+                else {Console.Write("\t   ");Program.print_colored(Game_Board.gamesymbol,player.color.consolecolor,ConsoleColor.Black);Console.Write(" "+player.name);Console.WriteLine("\t ("+player.get_slot_count()+")");} // Gebe Spieler 1 mit Farbe aus
             }
         }
         public int choose_slot(int index,int index_choosen_slot,string text) // Slotauswahl des Spielers
