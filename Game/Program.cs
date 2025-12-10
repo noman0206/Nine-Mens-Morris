@@ -22,13 +22,13 @@ class Game
         public Color color {get; private set;}// Farbe des Spielers 
         public static List<Player> players {get; private set;} = new();
         private static Player? currentPlayer {get; set;}
-        public Player(Game_Board game_board) // Konstruktor
+        public Player(Game_Board game_board, int number) // Konstruktor
         {
             this.game_board =game_board;
 
             Program.print_Title(); // Titel ausgeben
 
-            Console.Write("\n\tGib deinen Namen ein.\n\t> ");
+            Console.Write("\n\tSpieler "+ number +" Gib deinen Namen ein.\n\t> ");
             string? input = Console.ReadLine(); // Lese Eingabe ein
             if(input != null) name = input; // Lese Namen ein
             else name = "unbekannter Spieler";
@@ -407,8 +407,10 @@ class Game
 
         this.game_board = new Game_Board(); // Erstelle Gameboard
 
-        this.player1 = new Player(game_board); // Erstelle Spieler 1 
-        this.player2 = new Player(game_board); // Erstelle Spieler 2
+        for(int i = 0; i < 2; i++) // Erstelle 2 Spieler
+        {
+            new Player(game_board,i+1); // Erstelle Spieler
+        }
     }
     public void start() // Starte das Spiel
     {
