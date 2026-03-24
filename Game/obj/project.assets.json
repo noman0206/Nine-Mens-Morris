@@ -8,32 +8,24 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\hanne\\.nuget\\packages\\": {},
-    "P:\\VisualStudio\\Tools\\NuGetPackages": {}
+    "/home/noman/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj",
+      "projectUniqueName": "/home/noman/Code/Nine-Mens-Morris/Game/Game.csproj",
       "projectName": "Game",
-      "projectPath": "C:\\Onedrive\\Code\\NineMan'sMorris\\Game\\Game.csproj",
-      "packagesPath": "C:\\Users\\hanne\\.nuget\\packages\\",
-      "outputPath": "C:\\Onedrive\\Code\\NineMan'sMorris\\Game\\obj\\",
+      "projectPath": "/home/noman/Code/Nine-Mens-Morris/Game/Game.csproj",
+      "packagesPath": "/home/noman/.nuget/packages/",
+      "outputPath": "/home/noman/Code/Nine-Mens-Morris/Game/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "P:\\VisualStudio\\Tools\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\hanne\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/noman/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -52,7 +44,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -68,12 +60,22 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[9.0.14, 9.0.14]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[9.0.14, 9.0.14]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.104/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

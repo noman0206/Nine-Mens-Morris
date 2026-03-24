@@ -1,6 +1,8 @@
 ﻿// Mühle Mini Game Regeln siehe: https://www.spielezar.ch/portal/blog/wissen/mill-spielregeln
+using System.ComponentModel.Design;
 using System.Data;
 using System.Text;
+using System.Xml.Serialization;
 class Game
 {
     public class Player
@@ -26,14 +28,12 @@ class Game
         {
             this.game_board =game_board;
 
-            Program.print_Title(); // Titel ausgeben
-
             Console.Write("\n\tSpieler "+ number +" Gib deinen Namen ein.\n\t> ");
             string? input = Console.ReadLine(); // Lese Eingabe ein
             if(input != null) name = input; // Lese Namen ein
             else name = "unbekannter Spieler";
             
-            Menu playercolor_Menu = new Menu("Wähle eine Farbe aus:",Color.colors.Select(color => color.name).ToList()); // Starte Menu mit der nach namen unformatierten Liste der verfügbaren Farben
+            Program.Menu playercolor_Menu = new Program.Menu("Wähle eine Farbe aus:",Color.colors.Select(color => color.name).ToList()); // Starte Menu mit der nach namen unformatierten Liste der verfügbaren Farben
             this.color = Color.colors[playercolor_Menu.start()]; // setze Spielerfarbe aus Menu ausgabe
             Color.colors.Remove(this.color); // Entferne Spielerfarbe aus möglciche Spielerfarben
 
@@ -59,7 +59,6 @@ class Game
             ConsoleKeyInfo CKI; // Registriere klick event
             do
             {
-                Program.print_Title(); // Gebe Titel aus
                 print_players(); // gebe alle Spieler aus
                 Console.WriteLine(text); // gebe evtle Fehlermeldung aus
                 game_board.print(index,index_choosen_slot); // gebe Spielbrett mit auswahl aus
@@ -359,42 +358,7 @@ class Game
             Console.Write("\n\t");Slot.slots[6].print(gamesymbol,"└",index,index2);Console.Write("────────");Slot.slots[5].print(gamesymbol,"┴",index,index2);Console.Write("────────");Slot.slots[4].print(gamesymbol,"┘",index,index2);                                                                                                                                                                                                                       // └────────┴────────┘
         }
     }
-    class Menu
-    {
-        public List<string> options {get; set;} = new(); // Liste der Optionen
-        private string title {get; set;} // Titel der Auswahl
-        private int index {get; set;} = 0; // Index der aktuell ausgewählten stelle. start auf 0
-        public Menu(string title,List<string> options) // Konstruktor
-        {
-            this.title = title;
-            this.options = options;
-        }
-        private void print_Menu() // Menu ausgeben
-        {
-            Program.print_Title(); // Display Clearen 
-            if(title != "") // Gebe Titel aus solange er nicht leer ist
-            {
-                Console.Write("\n\n\t"+title); // Gebe titel aus
-            }
-            foreach(string option in options) // Für jede Option
-            {
-                if(index == options.IndexOf(option)) Program.print_colored("\n\t"+option,Program.selected_foreground_color,Program.selected_background_color); // Falls index == option gebe option farbig aus         
-                else Console.Write("\n\t"+option); // Gebe option normal aus  
-            }
-        }
-        public int start() // starte Menu
-        {
-            ConsoleKeyInfo CKI;
-            do
-            {
-                print_Menu(); // Optionen ausgeben
-                CKI = Console.ReadKey(false); // Keyboard abfrage
-                if(CKI.Key == ConsoleKey.UpArrow && index > 0 ) index--;// Wenn eingabe Pfeil nach Oben ist verändere index dementsprechend 
-                else if (CKI.Key == ConsoleKey.DownArrow && index < (options.Count-1)) index++;// Wenn eingabe Pfeil nach Unten ist verändere index dementsprechend 
-            } while(CKI.Key != ConsoleKey.Enter); // Wenn Enter gedrückt ist beende Auwahl
-            return index; // gebe position der Auswahl zurück
-        }
-    }
+    
     private Game_Board game_board {get;set;}
     public Game()
     {
@@ -443,14 +407,23 @@ class Game
         if(Player.players[0].get_slot_count() > Player.players[1].get_slot_count()) Winner = Player.players[0];
         else if(Player.players[0].get_slot_count() < Player.players[1].get_slot_count()) Winner = Player.players[1];
 
-        Program.print_Title();
+
         if(Winner != null)Console.WriteLine("\n\n\t"+Winner.name+" hat gewonnen! \n\n\tDrücke eine Taste um das Spiel zu beenden");
         Console.Read();
     }
 }
 class Program
 {
-    static public ConsoleColor selected_foreground_color {get; private set;} = ConsoleColor.White; // Ausgewählte Fordergrundfarbe
+    public static class Logo
+    {
+        private static string logo = "\t    __  __   _   _   _       _\n\t   |  \\/  | (_) (_) | |     | |\n\t   | \\  / |  _   _  | |__   | |   ___\n\t   | |\\/| | | | | | | '_ \\  | |  / _ \\\n\t   | |  | | | |_| | | | | | | | |  __/\n\t   |_|  |_|  \\__,_| |_| |_| |_|  \\___|";
+        public static void print()
+        {
+            Console.Clear();
+            Console.WriteLine(logo);
+        }
+    }
+    static public ConsoleColor selected_foreground_color {get; private set;} = ConsoleColor.Black; // Ausgewählte Fordergrundfarbe
     static public ConsoleColor selected_background_color {get; private set;} = ConsoleColor.Gray; // Ausgewählte Hintergrundfarbe
     static public ConsoleColor selected2_foreground_color {get; private set;} = ConsoleColor.White; // Ausgewählte Fordergrundfarbe 2
     static public ConsoleColor selected2_background_color {get; private set;} = ConsoleColor.DarkGray; // Ausgewählte Hintergrundfarbe 2
@@ -462,24 +435,96 @@ class Program
         Console.BackgroundColor = backgroundcolor; // Setzte ausgewählte Hintergrundfarbe
         Console.Write(text); // Gebe Text aus
         Console.ForegroundColor = standard_foreground_color; // Setzte standart Fordergrundfarbe
-        Console.BackgroundColor = standard_background_color; // Setzte standart Hintergrundfarbe
+        Console.ResetColor();
     }
-    static public void print_Title() // Funktion um den Titel auszugeben
+
+    public class Menu
     {
-        Console.Clear(); // Lösche Console
-        Console.Write("\n\tMühle - Das Spiel\n\t");
-        for(int i = 0; i < 20; i++) // Wiederhole 20 Mal
+        public List<string> options {get; set;} = new(); 
+        private string title {get; set;} 
+        private int index {get; set;} = 0; 
+        public Menu(string title,List<string> options) 
         {
-            Console.Write("─"); // unterstreiche titel
+            this.title = title;
+            this.options = options;
         }
-        Console.Write("\n");
+        private void print() 
+        {
+            Logo.print();
+            if(title != "") Console.Write("\n\t"+title); 
+            foreach(string option in options) 
+            {
+                if(index == options.IndexOf(option)) {Console.Write("\n\t\t\t");Program.print_colored(option,Program.selected_foreground_color,Program.selected_background_color);}  
+                else Console.Write("\n\t\t\t"+option); 
+            }
+        }
+        public int start() 
+        {
+            ConsoleKeyInfo CKI;
+            do
+            {
+                print(); 
+                CKI = Console.ReadKey(false); 
+                if(CKI.Key == ConsoleKey.UpArrow && index > 0 ) index--;
+                else if (CKI.Key == ConsoleKey.DownArrow && index < (options.Count-1)) index++;
+            } while(CKI.Key != ConsoleKey.Enter); 
+            return index; 
+        }
     }
+    static void play()
+    {
+        Menu playMenu = new Menu("",["Einzelspieler","Mehrspieler","Zurück"]);
+        switch (playMenu.start())
+        {
+            case 0: Console.Clear();Console.Write("\n\t\tIn arbeit!"); Console.ReadKey();break;
+            case 1: Console.Clear();Game multiplayerGame = new Game();multiplayerGame.start();break;
+            case 2: break;
+        }
+    }
+    static void rules()
+    {
+        Logo.print();
+        Console.WriteLine("\n\t- Ziel des Spiels: Den Gegner auf zwei Steine reduzierenoder ihn so blockieren, dass er keinen gültigen Zug mehr machen kann.");
+        Console.WriteLine("\t- Phase 1 (Setzen): Die Spieler setzen abwechselnd ihre 9 Steineauf die Kreuzungspunkte und Ecken des Spielbretts.");
+        Console.WriteLine("\t- Phase 2 (Ziehen): Wenn alle Steine gesetzt sind, wirdabwechselnd ein Stein auf einen angrenzenden, freien Punkt entlang der Linien bewegt.");
+        Console.WriteLine("\t- Die Mühle: Drei Steine der eigenen Farbe in einer geradenLinie bilden eine Mühle.");
+        Console.WriteLine("\t- Stein schlagen: Wer eine Mühle schließt, darf einen Steindes Gegners vom Brett nehmen.");
+        Console.WriteLine("\t- Schutzregel: Steine aus einer geschlossenen Mühle des Gegnersdürfen nicht entfernt werden, es sei denn, er hat nur noch Steine in Mühlen.");
+        Console.WriteLine("\t- Phase 3 (Springen): Sobald ein Spieler nur noch 3 Steine hat,darf er mit diesen frei auf jeden beliebigen freien Punkt auf dem Brett springen.");
+        Console.WriteLine("\t- Spielende: Das Spiel endet, wenn ein Spieler nur noch 2 Steinehat oder keine Züge mehr ausführen kann.\n");
+        print_colored("\tZurück",selected_foreground_color,selected_background_color);
+        Console.ReadKey();
+    }
+    static void credits()
+    {
+        
+    }
+    static void exit()
+    {
+        Menu exitMenu = new Menu("  Willst du das Spiel wirklich beenden?\n",["Nein","Ja"]);
+        switch (exitMenu.start())
+        {
+            case 0: break;
+            case 1: running = false;break;
+        }
+    }
+    static bool running = true;
     static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8; // Setze Ausgabeversion auf UTF8
-
-        Game game = new Game();
-        game.start(); // Starte Spiel
+        
+        while (running)
+        {
+            Menu mainMenu = new Menu("",["Spielen","Regeln","Credits","Beenden"]);        
+            switch (mainMenu.start())
+            {
+                case 0: play();break;
+                case 1: rules();break;
+                case 2: credits();break;
+                case 3: exit();break;
+            }
+        }
+        
     }
 }
 
