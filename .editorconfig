@@ -1,0 +1,12 @@
+root = true
+
+[*.cs]
+# disable naming-related analyzer diagnostics and style suggestions
+dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.IDE1007.severity = none
+dotnet_diagnostic.IDE1008.severity = none
+dotnet_diagnostic.IDE1009.severity = none
+dotnet_diagnostic.IDE1010.severity = none
+dotnet_diagnostic.IDE1011.severity = none
+# disable all style analyzer suggestions if you want no naming/style rules at all
+# dotnet_analyzer_diagnostic.category-Style.severity = none
