@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/noman/Code/Nine-Mens-Morris/Game/Game.csproj": {}
+    "/home/noman/Projects/Nine-Mens-Morris/Game/Game.csproj": {}
   },
   "projects": {
-    "/home/noman/Code/Nine-Mens-Morris/Game/Game.csproj": {
+    "/home/noman/Projects/Nine-Mens-Morris/Game/Game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/noman/Code/Nine-Mens-Morris/Game/Game.csproj",
+        "projectUniqueName": "/home/noman/Projects/Nine-Mens-Morris/Game/Game.csproj",
         "projectName": "Game",
-        "projectPath": "/home/noman/Code/Nine-Mens-Morris/Game/Game.csproj",
+        "projectPath": "/home/noman/Projects/Nine-Mens-Morris/Game/Game.csproj",
         "packagesPath": "/home/noman/.nuget/packages/",
-        "outputPath": "/home/noman/Code/Nine-Mens-Morris/Game/obj/",
+        "outputPath": "/home/noman/Projects/Nine-Mens-Morris/Game/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/noman/.nuget/NuGet/NuGet.Config"
@@ -57,11 +57,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[9.0.14, 9.0.14]"
+              "version": "[9.0.17, 9.0.17]"
             },
             {
               "name": "Microsoft.NETCore.App.Host.linux-x64",
-              "version": "[9.0.14, 9.0.14]"
+              "version": "[9.0.17, 9.0.17]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.17, 9.0.17]"
             }
           ],
           "frameworkReferences": {
@@ -69,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.104/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.109/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
